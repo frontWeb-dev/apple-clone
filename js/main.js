@@ -42,12 +42,27 @@
     },
   ];
 
-  // 각 section별 scroll Hight 설정
   const setLayout = () => {
+    // 각 스크롤 섹션의 높이 세팅
     for (let i = 0; i < sceneInfo.length; i++) {
       sceneInfo[i].scrollHeight = sceneInfo[i].heightNum * window.innerHeight;
       sceneInfo[i].objs.container.style.height = `${sceneInfo[i].scrollHeight}px`;
     }
+
+    // 새로고침 했을 때 활성화 된 씬 고정
+    yOffset = window.scrollY;
+    let totalScrollHeight = 0;
+    for (let i = 0; i < sceneInfo.length; i++) {
+      totalScrollHeight += sceneInfo[i].scrollHeight;
+
+      if (totalScrollHeight >= yOffset) {
+        currentScene = i;
+        break;
+      }
+
+      console.log(currentScene);
+    }
+    document.body.setAttribute("id", `show-scene-${currentScene}`);
   };
 
   const scrollLoop = () => {
@@ -58,19 +73,21 @@
 
     if (yOffset > prevScrollHeight + sceneInfo[currentScene].scrollHeight) {
       currentScene++;
+      document.body.setAttribute("id", `show-scene-${currentScene}`);
     }
 
     if (yOffset < prevScrollHeight) {
       if (currentScene === 0) return;
       currentScene--;
+      document.body.setAttribute("id", `show-scene-${currentScene}`);
     }
   };
 
+  // window.addEventListener('DOMContentLoaded', setLayout)
+  window.addEventListener("load", setLayout);
   window.addEventListener("resize", setLayout);
   window.addEventListener("scroll", () => {
     yOffset = window.scrollY;
     scrollLoop();
   });
-
-  setLayout();
 })();
