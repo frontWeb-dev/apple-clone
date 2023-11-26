@@ -1,4 +1,8 @@
 (() => {
+  let yOffset = 0; // scrollY
+  let prevScrollHeight = 0; // 현재 스크롤 위치보다 이전에 위치한 scroll-section들의 스크롤 높이값의 합
+  let currentScene = 0; // 현재 활성화된 scroll-section
+
   const sceneInfo = [
     {
       // scroll-section-0
@@ -46,8 +50,27 @@
     }
   };
 
-  // 브라우저 창 크기가 변경될 때마다 재실행
+  const scrollLoop = () => {
+    prevScrollHeight = 0;
+    for (let i = 0; i < currentScene; i++) {
+      prevScrollHeight += sceneInfo[i].scrollHeight;
+    }
+
+    if (yOffset > prevScrollHeight + sceneInfo[currentScene].scrollHeight) {
+      currentScene++;
+    }
+
+    if (yOffset < prevScrollHeight) {
+      if (currentScene === 0) return;
+      currentScene--;
+    }
+  };
+
   window.addEventListener("resize", setLayout);
+  window.addEventListener("scroll", () => {
+    yOffset = window.scrollY;
+    scrollLoop();
+  });
 
   setLayout();
 })();
