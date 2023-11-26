@@ -72,6 +72,10 @@ p {
   font-size: 2.5rem;
 }
 
+#scroll-section-2 .main-message {
+  font-size: 3.5em;
+}
+
 .main-message p {
   line-height: 1.2;
   font-weight: 900;
@@ -81,6 +85,21 @@ p {
   display: block;
   margin-bottom: 0.5em;
   font-size: 1rem;
+}
+
+.sticky-elem {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+#show-scene-0 #scroll-section-0 .sticky-elem,
+#show-scene-1 #scroll-section-1 .sticky-elem,
+#show-scene-2 #scroll-section-2 .sticky-elem,
+#show-scene-3 #scroll-section-3 .sticky-elem {
+  display: block;
 }
 
 .description {
@@ -96,10 +115,6 @@ p {
   margin-right: 0.2em;
   font-size: 3rem;
   color: rgb(29, 29, 31);
-}
-
-#scroll-section-2 .main-message {
-  font-size: 3.5em;
 }
 
 .desc-message {
